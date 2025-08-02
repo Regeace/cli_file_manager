@@ -46,3 +46,25 @@ def delete_file_or_catalog(entry_name):
         rmtree(entry_name)
 
 
+def find_files(directory, re_expr):
+    """Возвращает список из пар (папка, файл) согласно регулярному выражению re_expr в каталоге и всех подкаталогах, начиная с directory."""
+    files = []
+    if not os.path.exists(directory):
+        print('Каталог не существует')
+        return
+
+    for base_dir, current_dir, checking_files in os.walk(directory):
+        for elem in checking_files:
+            if base_dir:
+                if search(elem, re_expr):
+                    files.append((base_dir, elem))
+            else:
+                if search(re_expr, elem):
+                    files.append((current_dir, elem))
+
+    if len(files) == 0:
+        print('Файлы не найдены')
+        return
+    return files
+
+
