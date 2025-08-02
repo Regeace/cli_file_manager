@@ -90,3 +90,59 @@ def add_date_to_name(entry_name, recursive=False):
                 add_date_to_name(entry, recursive=True)
 
 
+def format_size(num_of_bites):
+    """Преобразует количество байтов в читаемый формат kB, MB, GB"""
+    for elem in ['', 'k', 'M', 'G']:
+        if num_of_bites < 1000:
+            if elem == '':
+                return f'{num_of_bites} {elem}B'
+            else:
+                return f'{round(num_of_bites, 1)} {elem}B'
+        num_of_bites /= 1000
+    return f'{round(num_of_bites, 1)} {elem}B'
+
+
+def show_size(entry_dir):
+    """Показывает размер каталогов, подкаталогов и файлов, размещённых в них."""
+    dict_of_sizes = {entry_dir: None}
+
+    def get_size(entry_name, show_inner_dir_files=True):
+        """Считает размер каталогов, подкаталогов и файлов, размещённых в них."""
+        nonlocal dict_of_sizes
+        directory_size = 0
+
+        if not os.path.exists(entry_name):
+            print('Каталог или файл не существует')
+            return
+
+        if count_files(entry_name) == 0:
+            return 0
+
+        for entry in os.scandir(entry_name):
+            if entry.is_file():
+                directory_size += os.path.getsize(entry)
+                if show_inner_dir_files:
+                    dict_of_sizes[entry.name] = os.path.getsize(entry)
+            else:
+                local_directory_size = 0
+                if count_files(entry.path) == 0 and show_inner_dir_files:
+                    dict_of_sizes[entry.name] = 0
+                else:
+                    local_directory_size += get_size(entry.path, show_inner_dir_files=False)
+                    directory_size += local_directory_size
+                    if show_inner_dir_files:
+                        dict_of_sizes[entry.name] = local_directory_size
+
+        return directory_size
+
+    dict_of_sizes[entry_dir] = get_size(entry_dir)
+    flag = True
+    for key, value in dict_of_sizes.items():
+        if flag:
+            print(f'{key}\t{format_size(value)}')
+            flag = False
+        else:
+            print(f'   - {key}\t{format_size(value)}')
+
+    return
+
