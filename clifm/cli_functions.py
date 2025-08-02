@@ -68,3 +68,25 @@ def find_files(directory, re_expr):
     return files
 
 
+def add_date_to_name(entry_name, recursive=False):
+    """Добавляет к названию файла/файлов дату их создания."""
+    if not os.path.exists(entry_name):
+        print('Каталог или файл не существует')
+        return
+
+    if os.path.isfile(entry_name):
+        # date.fromtimestamp() преобразует время в строку 'YYYY-MM-DD'
+        # os.path.getctime() возвращает время создания файла для Windows
+        name = os.path.basename(entry_name)
+        name_with_date = f'{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}'
+        os.rename(entry_name, name_with_date)
+    else:
+        for entry in os.scandir(entry_name):
+            if entry.is_file():
+                name = os.path.basename(entry)
+                name_with_date = f'{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}'
+                os.rename(entry, os.path.join(entry_name, name_with_date))
+            elif entry.is_dir() and recursive:
+                add_date_to_name(entry, recursive=True)
+
+
