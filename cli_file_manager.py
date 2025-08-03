@@ -1,7 +1,6 @@
 import argparse
 import clifm
 
-
 magic_words = {
     'copy': clifm.copy_file,
     'count': clifm.count_files,
@@ -16,7 +15,8 @@ def main():
     parser = argparse.ArgumentParser(prog='clifm',
                                      description='Небольшой файловый менеджер для консоли',
                                      epilog='Для расширенной помощи дополнительно введите: python cli_file_manager.py show help')
-    parser.add_argument('magic_phrase', type=str, choices=magic_words.keys(), help='Команда взаимодействия с файлами и каталогами')
+    parser.add_argument('magic_phrase', type=str, choices=magic_words.keys(),
+                        help='Команда взаимодействия с файлами и каталогами')
     parser.add_argument('name', type=str, help='Имя файла или каталога')
     parser.add_argument('-a', '--additional_var', type=str, help='Регулярное выражение для поиска')
 

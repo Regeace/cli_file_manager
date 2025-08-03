@@ -22,12 +22,12 @@ def make_file(file_name):
 def copy_file(file_name):
     """Создаёт копию файла с метаданными."""
     if not os.path.exists(file_name):
-        print('Файл не существует')
+        print('Копирование несуществующего файла')
         return
-    if os.path.exists('copy_' + file_name):
-        copy2(file_name, 'another_copy_' + file_name)
+    if os.path.exists('copy_' + os.path.basename(file_name)):
+        copy2(file_name, 'another_copy_' + os.path.basename(file_name))
     else:
-        copy2(file_name, 'copy_' + file_name)
+        copy2(file_name, 'copy_' + os.path.basename(file_name))
 
 
 def count_files(dir_name):
@@ -40,10 +40,13 @@ def count_files(dir_name):
 
 def delete_file_or_catalog(entry_name):
     """Удаляет папку (с файлами) или файл."""
-    if os.path.isfile(entry_name):
-        os.remove(entry_name)
+    if os.path.exists(entry_name):
+        if os.path.isfile(entry_name):
+            os.remove(entry_name)
+        else:
+            rmtree(entry_name)
     else:
-        rmtree(entry_name)
+        print('Каталог/файл не существует')
 
 
 def find_files(directory, re_expr):
@@ -145,4 +148,3 @@ def show_size(entry_dir):
             print(f'   - {key}\t{format_size(value)}')
 
     return
-
