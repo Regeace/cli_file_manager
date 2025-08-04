@@ -36,7 +36,7 @@ def copy_file(file_name):
             copy2(file_name, f'{os.path.dirname(file_name)}\\copy_{os.path.basename(file_name)}')
 
 
-def count_files(dir_name):
+def count_files(dir_name, show_result=True):
     """Подсчитывает количество файлов в папке."""
     if not os.path.exists(dir_name):
         print('Такой каталог в текущей папке не найден')
@@ -45,6 +45,9 @@ def count_files(dir_name):
     counter = 0
     for base_dir, current_dir, files in os.walk(dir_name):
         counter += len(files)
+    if show_result:
+        print(counter)
+
     return counter
 
 
@@ -127,7 +130,7 @@ def show_size(entry_dir):
             print('Каталог или файл не существует')
             return
 
-        if count_files(entry_name) == 0:
+        if count_files(entry_name, show_result=False) == 0:
             return 0
 
         for entry in os.scandir(entry_name):
@@ -137,7 +140,7 @@ def show_size(entry_dir):
                     dict_of_sizes[entry.name] = os.path.getsize(entry)
             else:
                 local_directory_size = 0
-                if count_files(entry.path) == 0 and show_inner_dir_files:
+                if count_files(entry.path, show_result=False) == 0 and show_inner_dir_files:
                     dict_of_sizes[entry.name] = 0
                 else:
                     local_directory_size += get_size(entry.path, show_inner_dir_files=False)

@@ -6,8 +6,9 @@ magic_words = {
     'count': clifm.count_files,
     'delete': clifm.delete_file_or_catalog,
     'find': clifm.find_files,
+    'make': clifm.make_file,
     'show': clifm.show_help,
-    'make': clifm.make_file
+    'size': clifm.show_size
 }
 
 
