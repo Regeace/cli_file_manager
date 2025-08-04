@@ -32,6 +32,10 @@ def copy_file(file_name):
 
 def count_files(dir_name):
     """Подсчитывает количество файлов в папке."""
+    if not os.path.exists(dir_name):
+        print('Такой каталог в текущей папке не найден')
+        return
+
     counter = 0
     for base_dir, current_dir, files in os.walk(dir_name):
         counter += len(files)
@@ -46,7 +50,7 @@ def delete_file_or_catalog(entry_name):
         else:
             rmtree(entry_name)
     else:
-        print('Каталог/файл не существует')
+        print('Удалить невозможно. Каталог/файл не существует')
 
 
 def find_files(directory, re_expr):
@@ -59,7 +63,7 @@ def find_files(directory, re_expr):
     for base_dir, current_dir, checking_files in os.walk(directory):
         for elem in checking_files:
             if base_dir:
-                if search(elem, re_expr):
+                if search(re_expr, elem):
                     files.append((base_dir, elem))
             else:
                 if search(re_expr, elem):
@@ -67,7 +71,6 @@ def find_files(directory, re_expr):
 
     if len(files) == 0:
         print('Файлы не найдены')
-        return
     return files
 
 
