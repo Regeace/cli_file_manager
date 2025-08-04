@@ -33,3 +33,6 @@ def delete_test_dir_and_files():
         delete_file_or_catalog('files_for_tests')
     else:
         print('Удаление невозможно. Каталог не создан')
+
+
+# delete_test_dir_and_files()

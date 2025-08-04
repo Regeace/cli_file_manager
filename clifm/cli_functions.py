@@ -77,7 +77,7 @@ def find_files(directory, re_expr):
 def add_date_to_name(entry_name, recursive=False):
     """Добавляет к названию файла/файлов дату их создания."""
     if not os.path.exists(entry_name):
-        print('Каталог или файл не существует')
+        print('Изменить имя невозможно. Каталог или файл не существует')
         return
 
     if os.path.isfile(entry_name):

@@ -18,7 +18,7 @@ def main():
     parser.add_argument('magic_phrase', type=str, choices=magic_words.keys(),
                         help='Команда взаимодействия с файлами и каталогами')
     parser.add_argument('name', type=str, help='Имя файла или каталога')
-    parser.add_argument('-a', '--additional_var', type=str, help='Регулярное выражение для поиска')
+    parser.add_argument('-a', '--additional_var', type=str, help='Регулярное выражение для поиска или ключ recursive')
 
     args = parser.parse_args()
 
