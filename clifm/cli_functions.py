@@ -24,10 +24,16 @@ def copy_file(file_name):
     if not os.path.exists(file_name):
         print('Копирование несуществующего файла')
         return
-    if os.path.exists('copy_' + os.path.basename(file_name)):
-        copy2(file_name, 'another_copy_' + os.path.basename(file_name))
+    if '\\' not in file_name:
+        if os.path.exists('copy_' + file_name):
+            copy2(file_name, 'another_copy_' + file_name)
+        else:
+            copy2(file_name, 'copy_' + file_name)
     else:
-        copy2(file_name, 'copy_' + os.path.basename(file_name))
+        if os.path.exists(f'{os.path.dirname(file_name)}\\copy_{os.path.basename(file_name)}'):
+            copy2(file_name, f'{os.path.dirname(file_name)}\\another_copy_{os.path.basename(file_name)}')
+        else:
+            copy2(file_name, f'{os.path.dirname(file_name)}\\copy_{os.path.basename(file_name)}')
 
 
 def count_files(dir_name):

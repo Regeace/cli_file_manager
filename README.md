@@ -8,10 +8,10 @@
 Базовая помощь вызывается командой
     python cli_file_manager.py -h/--help
 
-Вызвать файл readme можно командой:
+Вызвать файл 'readme' можно командой:
     python cli_file_manager.py show help
 
-Создать файл:
+Создать файл в текущей папке по имени или по адресу (абсолютному или относительному):
     python cli_file_manager.py make <file_name/file_path>
 
 Скопировать файл.

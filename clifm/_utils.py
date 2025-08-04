@@ -34,5 +34,5 @@ def delete_test_dir_and_files():
     else:
         print('Удаление невозможно. Каталог не создан')
 
-
+# make_test_dir_and_files()
 # delete_test_dir_and_files()
