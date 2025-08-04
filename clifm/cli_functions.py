@@ -150,4 +150,4 @@ def show_size(entry_dir):
         else:
             print(f'   - {key}\t{format_size(value)}')
 
-    return
+    return dict_of_sizes

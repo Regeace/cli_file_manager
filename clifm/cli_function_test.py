@@ -72,6 +72,25 @@ class FunctionsTest(unittest.TestCase):
 
         os.chdir('..')
 
+    def test_show_size(self):
+        """Для проверки в 3 файла из разных каталогов добавляется строка размером 52 байта"""
+        os.chdir(self.test_dir)
+        with open(self.test_file1, 'w', encoding='utf-8') as f1:
+            f1.write('Тестовый текст тестирования')
+        os.chdir(self.test_dir_inner_name)
+        with open(self.test_file2, 'w', encoding='utf-8') as f2:
+            f2.write('Тестовый текст тестирования')
+        with open(self.test_file3, 'w', encoding='utf-8') as f3:
+            f3.write('Тестовый текст тестирования')
+        os.chdir('..')
+        os.chdir('..')
+        dict_of_sizes_to_test = show_size(self.test_dir)
+
+        self.assertEqual(dict_of_sizes_to_test[self.test_dir], 156)
+        self.assertEqual(dict_of_sizes_to_test[self.test_dir_inner_name], 104)
+        self.assertEqual(dict_of_sizes_to_test[self.test_file1], 52)
+        self.assertEqual(dict_of_sizes_to_test[self.test_file3], 0)
+
     def tearDown(self):
         delete_test_dir_and_files()
 
