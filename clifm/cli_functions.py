@@ -93,7 +93,10 @@ def add_date_to_name(entry_name, recursive=False):
         # date.fromtimestamp() преобразует время в строку 'YYYY-MM-DD'
         # os.path.getctime() возвращает время создания файла для Windows
         name = os.path.basename(entry_name)
-        name_with_date = f'{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}'
+        if '\\' not in entry_name:
+            name_with_date = f'{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}'
+        else:
+            name_with_date = f'{os.path.dirname(entry_name)}\\{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}'
         os.rename(entry_name, name_with_date)
     else:
         for entry in os.scandir(entry_name):
