@@ -62,8 +62,8 @@ def delete_file_or_catalog(entry_name):
         print('Удалить невозможно. Каталог/файл не существует')
 
 
-def find_files(directory, re_expr):
-    """Возвращает список из пар (папка, файл) согласно регулярному выражению re_expr в каталоге и всех подкаталогах, начиная с directory."""
+def find_files(directory, re_expr, show_result=True):
+    """Возвращает список из пар (папка, файл) согласно подстроке или регулярному выражению re_expr в каталоге и всех подкаталогах, начиная с directory."""
     files = []
     if not os.path.exists(directory):
         print('Каталог не существует')
@@ -80,6 +80,9 @@ def find_files(directory, re_expr):
 
     if len(files) == 0:
         print('Файлы не найдены')
+    elif len(files) != 0 and show_result:
+        print(*files, sep='\n')
+
     return files
 
 

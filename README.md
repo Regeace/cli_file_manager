@@ -23,15 +23,17 @@
 Команда, позволяющая подсчитать общее количество файлов в каталоге (в том числе и во вложенных):
     python cli_file_manager.py count <directory_name/directory_path>
 
-Команда, позволяющая найти все подходящие файлы в папке (в том числе вложенные) по фильтру регулярного выражения.
-Возвращает список из пар (каталог, файл) согласно регулярному выражению regular_expression:
-    python cli_file_manager.py find <directory_name/directory_path> regular_expression
+Команда, позволяющая найти все подходящие файлы в папке (в том числе во вложенных) 
+по фильтру подстроки или регулярного выражения.
+Поиск ведётся по всему имени файла на возможность вхождения подстроки.
+Возвращает список из пар (каталог, файл) согласно подстроке или регулярному выражению expression:
+    python cli_file_manager.py find <directory_name/directory_path> --re <expression>
 
 Добавить дату создания к имени файла, ко всем файлам, если указан каталог. 
-Если с ключом -r/--recursive, то во всех вложенных каталогах:
+Если с ключом --recursive, то во всех вложенных каталогах:
     python cli_file_manager.py <file_name/file_path>
     python cli_file_manager.py <file_or_directory_name/file_or_directory_path>
-    python cli_file_manager.py <file_or_directory_name/file_or_directory_path> -r/--recursive
+    python cli_file_manager.py <file_or_directory_name/file_or_directory_path> --recursive
 
 Команда, запускающая анализ всех вложенных папок и файлов 
 и выводящая информацию о том, насколько большие файлы находятся на уровне вызова:

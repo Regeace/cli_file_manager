@@ -32,13 +32,13 @@ class FunctionsTest(unittest.TestCase):
             (self.test_dir_inner, self.test_file3)
         ]
 
-        self.assertEqual(find_files(self.test_dir, self.test_file1), answer1)
-        self.assertEqual(find_files(self.test_dir, '1.txt$'), answer1)
-        self.assertEqual(find_files(self.test_dir, '1'), answer1)
+        self.assertEqual(find_files(self.test_dir, self.test_file1, show_result=False), answer1)
+        self.assertEqual(find_files(self.test_dir, '1.txt$', show_result=False), answer1)
+        self.assertEqual(find_files(self.test_dir, '1', show_result=False), answer1)
 
-        self.assertEqual(find_files(self.test_dir, '[0-9]'), answer2)
-        self.assertEqual(find_files(self.test_dir, 'test'), answer2)
-        self.assertEqual(find_files(self.test_dir, r'\d'), answer2)
+        self.assertEqual(find_files(self.test_dir, '[0-9]', show_result=False), answer2)
+        self.assertEqual(find_files(self.test_dir, 'test', show_result=False), answer2)
+        self.assertEqual(find_files(self.test_dir, r'\d', show_result=False), answer2)
 
     def test_copy_file(self):
         os.chdir(self.test_dir)

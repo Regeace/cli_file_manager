@@ -19,9 +19,9 @@ def main():
                                      epilog='Для расширенной помощи дополнительно введите: python cli_file_manager.py show help')
     parser.add_argument('magic_phrase', type=str, choices=magic_words.keys(),
                         help='Команда взаимодействия с файлами и каталогами')
-    parser.add_argument('name', type=str, help='Имя файла или каталога')
-    parser.add_argument('--re_expr', type=str, help='Регулярное выражение для поиска')
-    parser.add_argument('--recursive', type=bool, default=False,
+    parser.add_argument('name', type=str, help='Имя файла или каталога, путь к файлу или каталогу')
+    parser.add_argument('--re', type=str, default=None, help='Подстрока или регулярное выражение для поиска файлов')
+    parser.add_argument('--recursive', default=False, action='store_true',
                         help='Дата создания файла прибавляется к файлам во вложенных каталогах')
 
     args = parser.parse_args()
@@ -29,7 +29,7 @@ def main():
     if args.magic_phrase == 'date':
         magic_words[args.magic_phrase](args.name, args.recursive)
     elif args.magic_phrase == 'find':
-        magic_words[args.magic_phrase](args.name, args.re_expr)
+        magic_words[args.magic_phrase](args.name, args.re)
     else:
         magic_words[args.magic_phrase](args.name)
 
