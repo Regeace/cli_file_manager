@@ -1,5 +1,5 @@
 import os
-from cli_functions import make_file, delete_file_or_catalog
+from functions import make_file, delete_file_or_catalog
 
 
 def make_test_dir_and_files():
@@ -27,6 +27,7 @@ def make_test_dir_and_files():
     [make_file(f'test_file{i}.txt') for i in range(1, 4)]
     os.chdir('..')
     os.chdir('..')
+
 
 def delete_test_dir_and_files():
     if os.path.exists('files_for_tests'):

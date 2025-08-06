@@ -1,10 +1,9 @@
-import os
 import unittest
-from cli_functions import *
+from functions import *
 from _utils import make_test_dir_and_files, delete_test_dir_and_files
 
 
-class FunctionsTest(unittest.TestCase):
+class TestFunctions(unittest.TestCase):
     test_dir = 'files_for_tests'
     test_dir_inner = 'files_for_tests\\files_for_tests_inner'
     test_dir_inner_name = 'files_for_tests_inner'
