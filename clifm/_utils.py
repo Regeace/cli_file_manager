@@ -4,7 +4,7 @@ from functions import make_file, delete_file_or_catalog
 
 def make_test_dir_and_files():
     """
-    Создаёт папки с файлами для тестовых задач.
+    Создаёт каталоги с файлами для тестовых задач.
     Структура вида:
     files_for_tests
         files_for_tests_inner
@@ -31,7 +31,7 @@ def make_test_dir_and_files():
 
 def delete_test_dir_and_files():
     if os.path.exists('files_for_tests'):
-        delete_file_or_catalog('files_for_tests')
+        delete_file_or_catalog('files_for_tests', show_result=False)
     else:
         print('Удаление невозможно. Каталог не создан')
 

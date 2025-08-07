@@ -41,8 +41,8 @@ class TestFunctions(unittest.TestCase):
 
     def test_copy_file(self):
         os.chdir(self.test_dir)
-        copy_file(self.test_file1)
-        copy_file(self.test_file1)
+        copy_file(self.test_file1, show_result=False)
+        copy_file(self.test_file1, show_result=False)
 
         self.assertTrue(os.path.exists(self.test_file1))
         self.assertTrue(os.path.exists(f'copy_{self.test_file1}'))
@@ -53,7 +53,7 @@ class TestFunctions(unittest.TestCase):
     def test_add_date_to_name(self):
         """Проверяется наличие файла с новым именем и отсутствие файла со старым именем в каталоге и подкаталоге,
         далее проверяется применимость функции к отдельному файлу"""
-        add_date_to_name(self.test_dir, recursive=True)
+        add_date_to_name(self.test_dir, recursive=True, show_result=False)
         os.chdir(self.test_dir)
 
         self.assertTrue(os.path.exists(f'{self.test_file1[:-4]}_{str(date.today())}{self.test_file1[-4:]}'))
@@ -64,7 +64,7 @@ class TestFunctions(unittest.TestCase):
         os.chdir('..')
 
         make_file('test_file.txt')
-        add_date_to_name('test_file.txt')
+        add_date_to_name('test_file.txt', show_result=False)
 
         self.assertTrue(os.path.exists(f'test_file_{str(date.today())}.txt'))
         self.assertFalse(os.path.exists('test_file.txt'))
@@ -95,4 +95,4 @@ class TestFunctions(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(argv=['', ], exit=False)
+    unittest.main()

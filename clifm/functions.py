@@ -19,21 +19,26 @@ def make_file(file_name):
         pass
 
 
-def copy_file(file_name):
+def copy_file(file_name, show_result=True):
     """Создаёт копию файла с метаданными."""
     if not os.path.exists(file_name):
         print('Копирование несуществующего файла')
         return
-    if '\\' not in file_name:
-        if os.path.exists('copy_' + file_name):
-            copy2(file_name, 'another_copy_' + file_name)
+
+    if os.path.isfile(file_name):
+        if '\\' not in file_name:
+            if os.path.exists('copy_' + file_name):
+                copy2(file_name, 'another_copy_' + file_name)
+            else:
+                copy2(file_name, 'copy_' + file_name)
         else:
-            copy2(file_name, 'copy_' + file_name)
-    else:
-        if os.path.exists(f'{os.path.dirname(file_name)}\\copy_{os.path.basename(file_name)}'):
-            copy2(file_name, f'{os.path.dirname(file_name)}\\another_copy_{os.path.basename(file_name)}')
-        else:
-            copy2(file_name, f'{os.path.dirname(file_name)}\\copy_{os.path.basename(file_name)}')
+            if os.path.exists(f'{os.path.dirname(file_name)}\\copy_{os.path.basename(file_name)}'):
+                copy2(file_name, f'{os.path.dirname(file_name)}\\another_copy_{os.path.basename(file_name)}')
+            else:
+                copy2(file_name, f'{os.path.dirname(file_name)}\\copy_{os.path.basename(file_name)}')
+
+    if show_result:
+        print('Создана копия файла')
 
 
 def count_files(dir_name, show_result=True):
@@ -51,7 +56,7 @@ def count_files(dir_name, show_result=True):
     return counter
 
 
-def delete_file_or_catalog(entry_name):
+def delete_file_or_catalog(entry_name, show_result=True):
     """Удаляет папку (с файлами) или файл."""
     if os.path.exists(entry_name):
         if os.path.isfile(entry_name):
@@ -60,6 +65,9 @@ def delete_file_or_catalog(entry_name):
             rmtree(entry_name)
     else:
         print('Удалить невозможно. Каталог/файл не существует')
+
+    if show_result:
+        print('Каталог/файл удалён')
 
 
 def find_files(directory, re_expr, show_result=True):
@@ -86,15 +94,15 @@ def find_files(directory, re_expr, show_result=True):
     return files
 
 
-def add_date_to_name(entry_name, recursive=False):
+def add_date_to_name(entry_name, recursive=False, show_result=True):
     """Добавляет к названию файла/файлов дату их создания."""
     if not os.path.exists(entry_name):
         print('Изменить имя невозможно. Каталог или файл не существует')
         return
 
     if os.path.isfile(entry_name):
-        # date.fromtimestamp() преобразует время в строку 'YYYY-MM-DD'
-        # os.path.getctime() возвращает время создания файла для Windows
+        '''date.fromtimestamp() преобразует время в строку 'YYYY-MM-DD'
+           os.path.getctime() возвращает время создания файла для Windows'''
         name = os.path.basename(entry_name)
         if '\\' not in entry_name:
             name_with_date = f'{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}'
@@ -109,6 +117,9 @@ def add_date_to_name(entry_name, recursive=False):
                 os.rename(entry, os.path.join(entry_name, name_with_date))
             elif entry.is_dir() and recursive:
                 add_date_to_name(entry, recursive=True)
+
+    if show_result:
+        print(f'К именам файлов в каталоге добавлена дата их создания')
 
 
 def format_size(num_of_bites):

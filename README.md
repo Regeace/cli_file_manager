@@ -14,7 +14,8 @@
 Создать файл в текущей папке по имени или по адресу (абсолютному или относительному):
     python cli_file_manager.py make <file_name/file_path>
 
-Скопировать файл. Если копия уже существует, создаст ещё одну копию:
+Скопировать файл. Копирование происходит в тот же каталог.
+Если копия уже существует, создаст ещё одну копию:
     python cli_file_manager.py copy <file_name/file_path>
 
 Удалить файл или каталог:
@@ -35,6 +36,5 @@
     python cli_file_manager.py <file_or_directory_name/file_or_directory_path>
     python cli_file_manager.py <file_or_directory_name/file_or_directory_path> --recursive
 
-Команда, запускающая анализ всех вложенных папок и файлов 
-и выводящая информацию о том, насколько большие файлы находятся на уровне вызова:
-    python cli_file_manager.py <file_or_directory_name/file_or_directory_path>
+Выводит размер каталогов и файлов, начиная с переданного в следующей команде:
+    python cli_file_manager.py <file_or_directory_name/file_or_directory_path> 
