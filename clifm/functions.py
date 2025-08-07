@@ -44,7 +44,7 @@ def copy_file(file_name, show_result=True):
 def count_files(dir_name, show_result=True):
     """Подсчитывает количество файлов в папке."""
     if not os.path.exists(dir_name):
-        print('Такой каталог в текущей папке не найден')
+        print('Невозможно посчитать файлы. Такой каталог не найден')
         return
 
     counter = 0
@@ -119,7 +119,7 @@ def add_date_to_name(entry_name, recursive=False, show_result=True):
                 add_date_to_name(entry, recursive=True)
 
     if show_result:
-        print(f'К именам файлов в каталоге добавлена дата их создания')
+        print('К именам файлов в каталоге добавлена дата их создания')
 
 
 def format_size(num_of_bites):
@@ -144,7 +144,7 @@ def show_size(entry_dir):
         directory_size = 0
 
         if not os.path.exists(entry_name):
-            print('Каталог или файл не существует')
+            print('Невозможно посчитать размер. Каталог или файл не существует')
             return
 
         if count_files(entry_name, show_result=False) == 0:

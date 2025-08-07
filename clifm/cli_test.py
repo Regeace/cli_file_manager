@@ -25,6 +25,7 @@ class TestCli(unittest.TestCase):
                                  text=True)
                 print(f'Должно быть: {answer},\nполучено в тесте: {cli_result.stdout[:-1]}\n')
                 self.assertEqual(answer, cli_result.stdout[:-1])
+                self.assertEqual(cli_result.returncode, 0)
             chdir('clifm')
 
     def test_cli_valid_expressions_long(self):
@@ -37,6 +38,38 @@ class TestCli(unittest.TestCase):
         print(r"Должно быть: ('clifm\\files_for_tests\\files_for_tests_inner', 'test_file3.txt')",
               '\nполучено в тесте:' + cli_result.stdout[:-1])
         self.assertEqual(r"('clifm\\files_for_tests\\files_for_tests_inner', 'test_file3.txt')", cli_result.stdout[:-1])
+
+    def test_cli_invalid_expressions(self):
+        """Проверка некорректного ввода magic_phrase (первого слова) или отсутствие name (второе слово)"""
+        test_cases = [
+            ('five', r'clifm\files_for_tests'),
+            ('find', ''),
+            ('', '')
+        ]
+
+        for magic_word, name_path in test_cases:
+            chdir('..')
+            with self.subTest(magic_word=magic_word, name_path=name_path):
+                cli_result = run([executable, 'calculator.py', magic_word, name_path], capture_output=True, text=True)
+                self.assertEqual(cli_result.returncode, 2)
+            chdir('clifm')
+
+    def test_cli_invalid_expressions_second(self):
+        """Проверка некорректного ввода name (второе слово)"""
+        test_cases = [
+            ('copy', '5'),
+            ('date', '5'),
+            ('size', '5'),
+            ('count', '5')
+        ]
+
+        for magic_word, name_path in test_cases:
+            chdir('..')
+            with self.subTest(magic_word=magic_word, name_path=name_path):
+                cli_result = run([executable, 'calculator.py', magic_word, name_path], capture_output=True, text=True)
+                self.assertTrue('No such file or directory' in cli_result.stderr)
+                self.assertEqual(cli_result.returncode, 2)
+            chdir('clifm')
 
     def tearDown(self):
         delete_test_dir_and_files()
