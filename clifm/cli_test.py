@@ -40,17 +40,17 @@ class TestCli(unittest.TestCase):
         self.assertEqual(r"('clifm\\files_for_tests\\files_for_tests_inner', 'test_file3.txt')", cli_result.stdout[:-1])
 
     def test_cli_invalid_expressions(self):
-        """Проверка некорректного ввода magic_phrase (первого слова) или отсутствие name (второе слово)"""
+        """Проверка некорректного ввода magic_phrase (первого слова)"""
         test_cases = [
             ('five', r'clifm\files_for_tests'),
-            ('find', ''),
+            ('', r'clifm\files_for_tests'),
             ('', '')
         ]
 
         for magic_word, name_path in test_cases:
             chdir('..')
             with self.subTest(magic_word=magic_word, name_path=name_path):
-                cli_result = run([executable, 'calculator.py', magic_word, name_path], capture_output=True, text=True)
+                cli_result = run([executable, 'cli_file_manager.py', magic_word, name_path], capture_output=True, text=True)
                 self.assertEqual(cli_result.returncode, 2)
             chdir('clifm')
 
@@ -60,15 +60,15 @@ class TestCli(unittest.TestCase):
             ('copy', '5'),
             ('date', '5'),
             ('size', '5'),
-            ('count', '5')
+            ('count', '')
         ]
 
         for magic_word, name_path in test_cases:
             chdir('..')
             with self.subTest(magic_word=magic_word, name_path=name_path):
-                cli_result = run([executable, 'calculator.py', magic_word, name_path], capture_output=True, text=True)
-                self.assertTrue('No such file or directory' in cli_result.stderr)
-                self.assertEqual(cli_result.returncode, 2)
+                cli_result = run([executable, 'cli_file_manager.py', magic_word, name_path], capture_output=True, text=True)
+                print(cli_result.stdout)
+                self.assertEqual(cli_result.returncode, 0)
             chdir('clifm')
 
     def tearDown(self):

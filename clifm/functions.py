@@ -136,16 +136,16 @@ def format_size(num_of_bites):
 
 def show_size(entry_dir):
     """Показывает размер каталогов, подкаталогов и файлов, размещённых в них."""
+    if not os.path.exists(entry_dir):
+        print('Невозможно посчитать размер. Каталог или файл не существует')
+        return
+
     dict_of_sizes = {entry_dir: None}
 
     def get_size(entry_name, show_inner_dir_files=True):
         """Считает размер каталогов, подкаталогов и файлов, размещённых в них."""
         nonlocal dict_of_sizes
         directory_size = 0
-
-        if not os.path.exists(entry_name):
-            print('Невозможно посчитать размер. Каталог или файл не существует')
-            return
 
         if count_files(entry_name, show_result=False) == 0:
             return 0
