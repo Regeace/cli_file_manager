@@ -6,7 +6,7 @@
 осуществлять поиск файлов в каталоге.
 
 Базовая помощь вызывается командой:  
-    python cli_file_manager.py -h/--help
+    `python cli_file_manager.py -h/--help`
 
 Вызвать файл 'readme' можно командой:  
     python cli_file_manager.py show help
@@ -28,8 +28,8 @@
 по фильтру подстроки или регулярного выражения.
 Поиск ведётся по всему имени файла на возможность вхождения подстроки.
 При вызове без параметра --re выведет список всех файлов, имеющих какое-либо расширение.
-Возвращает список из пар (каталог, файл) согласно подстроке или регулярному выражению expression:  
-    python cli_file_manager.py find <directory_name/directory_path> --re <expression>
+Возвращает список из пар (каталог, файл) согласно подстроке или регулярному выражению substring/expression:  
+    python cli_file_manager.py find <directory_name/directory_path> --re <substring/expression>  
 
 Добавить дату создания к имени файла, ко всем файлам, если указан каталог. 
 Если с ключом --recursive, то во всех вложенных каталогах:  
