@@ -21,10 +21,10 @@ def make_test_dir_and_files():
 
     os.mkdir('files_for_tests')
     os.chdir('files_for_tests')
-    [make_file(f'test_file{i}.txt') for i in range(1, 4)]
+    [make_file(f'test_file{i}.txt', show_result=False) for i in range(1, 4)]
     os.mkdir('files_for_tests_inner')
     os.chdir('files_for_tests_inner')
-    [make_file(f'test_file{i}.txt') for i in range(1, 4)]
+    [make_file(f'test_file{i}.txt', show_result=False) for i in range(1, 4)]
     os.chdir('..')
     os.chdir('..')
 
@@ -34,6 +34,3 @@ def delete_test_dir_and_files():
         delete_file_or_catalog('files_for_tests', show_result=False)
     else:
         print('Удаление невозможно. Каталог не создан')
-
-# make_test_dir_and_files()
-# delete_test_dir_and_files()

@@ -23,7 +23,7 @@ class TestCli(unittest.TestCase):
             with self.subTest(magic_word=magic_word, name_path=name_path, answer=answer):
                 cli_result = run([executable, 'cli_file_manager.py', magic_word, name_path], capture_output=True,
                                  text=True)
-                print(f'Должно быть: {answer},\nполучено в тесте: {cli_result.stdout[:-1]}\n')
+                # print(f'Должно быть: {answer},\nполучено в тесте: {cli_result.stdout[:-1]}\n')
                 self.assertEqual(answer, cli_result.stdout[:-1])
                 self.assertEqual(cli_result.returncode, 0)
             chdir('clifm')
@@ -35,8 +35,8 @@ class TestCli(unittest.TestCase):
                           r'clifm\files_for_tests\files_for_tests_inner', '--re', 'test_file3'],
                          capture_output=True, text=True)
         chdir('clifm')
-        print(r"Должно быть: ('clifm\\files_for_tests\\files_for_tests_inner', 'test_file3.txt')",
-              '\nполучено в тесте:' + cli_result.stdout[:-1])
+        # print(r"Должно быть: ('clifm\\files_for_tests\\files_for_tests_inner', 'test_file3.txt')",
+        #       '\nполучено в тесте:' + cli_result.stdout[:-1])
         self.assertEqual(r"('clifm\\files_for_tests\\files_for_tests_inner', 'test_file3.txt')", cli_result.stdout[:-1])
 
     def test_cli_invalid_expressions(self):
@@ -50,24 +50,27 @@ class TestCli(unittest.TestCase):
         for magic_word, name_path in test_cases:
             chdir('..')
             with self.subTest(magic_word=magic_word, name_path=name_path):
-                cli_result = run([executable, 'cli_file_manager.py', magic_word, name_path], capture_output=True, text=True)
+                cli_result = run([executable, 'cli_file_manager.py', magic_word, name_path],
+                                 capture_output=True, text=True)
                 self.assertEqual(cli_result.returncode, 2)
             chdir('clifm')
 
     def test_cli_invalid_expressions_second(self):
         """Проверка некорректного ввода name (второе слово)"""
         test_cases = [
-            ('copy', '5'),
-            ('date', '5'),
-            ('size', '5'),
-            ('count', '')
+            ('copy', '5', 'Копирование несуществующего файла'),
+            ('date', '5', 'Изменить имя невозможно. Каталог или файл не существует'),
+            ('size', '5', 'Невозможно посчитать размер. Каталог или файл не существует'),
+            ('count', '', 'Невозможно посчитать файлы. Такой каталог не найден')
         ]
 
-        for magic_word, name_path in test_cases:
+        for magic_word, name_path, answer in test_cases:
             chdir('..')
-            with self.subTest(magic_word=magic_word, name_path=name_path):
-                cli_result = run([executable, 'cli_file_manager.py', magic_word, name_path], capture_output=True, text=True)
-                print(cli_result.stdout)
+            with self.subTest(magic_word=magic_word, name_path=name_path, answer=answer):
+                cli_result = run([executable, 'cli_file_manager.py', magic_word, name_path],
+                                 capture_output=True, text=True)
+                # print(f'Должно быть: {answer},\nполучено в тесте: {cli_result.stdout[:-1]}\n')
+                self.assertEqual(answer, cli_result.stdout[:-1])
                 self.assertEqual(cli_result.returncode, 0)
             chdir('clifm')
 

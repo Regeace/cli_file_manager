@@ -20,7 +20,7 @@ def main():
     parser.add_argument('magic_phrase', type=str, choices=magic_words.keys(),
                         help='Команда взаимодействия с файлами и каталогами')
     parser.add_argument('name', type=str, help='Имя файла или каталога, путь к файлу или каталогу')
-    parser.add_argument('--re', type=str, default=None, help='Подстрока или регулярное выражение для поиска файлов')
+    parser.add_argument('--re', type=str, default='.', help='Подстрока или регулярное выражение для поиска файлов')
     parser.add_argument('--recursive', default=False, action='store_true',
                         help='Дата создания файла прибавляется к файлам во вложенных каталогах')
 

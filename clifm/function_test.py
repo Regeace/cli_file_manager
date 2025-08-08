@@ -63,7 +63,7 @@ class TestFunctions(unittest.TestCase):
         self.assertFalse(os.path.exists(self.test_file3))
         os.chdir('..')
 
-        make_file('test_file.txt')
+        make_file('test_file.txt', show_result=False)
         add_date_to_name('test_file.txt', show_result=False)
 
         self.assertTrue(os.path.exists(f'test_file_{str(date.today())}.txt'))

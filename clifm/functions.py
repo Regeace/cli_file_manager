@@ -13,15 +13,18 @@ def show_help(show_readme_file):
         print()
 
 
-def make_file(file_name):
+def make_file(file_name, show_result=True):
     """Создаёт новый файл."""
     with open(file_name, 'w+', encoding='utf-8') as _:
         pass
 
+    if show_result:
+        print('Файл создан')
+
 
 def copy_file(file_name, show_result=True):
     """Создаёт копию файла с метаданными."""
-    if not os.path.exists(file_name):
+    if not os.path.exists(file_name) or os.path.isdir(file_name):
         print('Копирование несуществующего файла')
         return
 
@@ -65,6 +68,7 @@ def delete_file_or_catalog(entry_name, show_result=True):
             rmtree(entry_name)
     else:
         print('Удалить невозможно. Каталог/файл не существует')
+        return
 
     if show_result:
         print('Каталог/файл удалён')
@@ -116,7 +120,7 @@ def add_date_to_name(entry_name, recursive=False, show_result=True):
                 name_with_date = f'{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}'
                 os.rename(entry, os.path.join(entry_name, name_with_date))
             elif entry.is_dir() and recursive:
-                add_date_to_name(entry, recursive=True)
+                add_date_to_name(entry, recursive=True, show_result=False)
 
     if show_result:
         print('К именам файлов в каталоге добавлена дата их создания')
@@ -171,9 +175,9 @@ def show_size(entry_dir):
     flag = True
     for key, value in dict_of_sizes.items():
         if flag:
-            print(f'{key}\t{format_size(value)}')
+            print(f'{key}    {format_size(value)}')
             flag = False
         else:
-            print(f'   - {key}\t{format_size(value)}')
+            print(f'   - {key}    {format_size(value)}')
 
     return dict_of_sizes
