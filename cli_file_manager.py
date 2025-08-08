@@ -16,7 +16,7 @@ magic_words = {
 def main():
     parser = argparse.ArgumentParser(prog='clifm',
                                      description='Небольшой файловый менеджер для консоли',
-                                     epilog='Для расширенной помощи дополнительно введите: python cli_file_manager.py show help')
+                                     epilog='Для ознакомления с возможными командами введите: python cli_file_manager.py show help')
     parser.add_argument('magic_phrase', type=str, choices=magic_words.keys(),
                         help='Команда взаимодействия с файлами и каталогами')
     parser.add_argument('name', type=str, help='Имя файла или каталога, путь к файлу или каталогу')

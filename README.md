@@ -32,7 +32,7 @@
     python cli_file_manager.py find <directory_name/directory_path> --re <expression>
 
 Добавить дату создания к имени файла, ко всем файлам, если указан каталог. 
-Если с ключом --recursive, то во всех вложенных каталогах:
+Если с ключом --recursive, то во всех вложенных каталогах:  
     python cli_file_manager.py <file_name/file_path>  
     python cli_file_manager.py <file_or_directory_name/file_or_directory_path>  
     python cli_file_manager.py <file_or_directory_name/file_or_directory_path> --recursive  
