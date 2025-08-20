@@ -33,9 +33,9 @@
 
 Добавить дату создания к имени файла, ко всем файлам, если указан каталог.   
 Если с ключом --recursive, то во всех вложенных каталогах:  
-    `python cli_file_manager.py <file_name/file_path>`  
-    `python cli_file_manager.py <file_or_directory_name/file_or_directory_path>`  
-    `python cli_file_manager.py <file_or_directory_name/file_or_directory_path> --recursive`  
+    `python cli_file_manager.py date <file_name/file_path>`  
+    `python cli_file_manager.py date <file_or_directory_name/file_or_directory_path>`  
+    `python cli_file_manager.py date <file_or_directory_name/file_or_directory_path> --recursive`  
 
 Выводит размер каталогов и файлов, начиная с переданного, в следующей команде:  
-    `python cli_file_manager.py <file_or_directory_name/file_or_directory_path>`   
+    `python cli_file_manager.py size <file_or_directory_name/file_or_directory_path>`   

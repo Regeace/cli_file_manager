@@ -1,3 +1,4 @@
+import os.path
 import unittest
 from functions import *
 from _utils import make_test_dir_and_files, delete_test_dir_and_files
@@ -5,7 +6,7 @@ from _utils import make_test_dir_and_files, delete_test_dir_and_files
 
 class TestFunctions(unittest.TestCase):
     test_dir = 'files_for_tests'
-    test_dir_inner = 'files_for_tests\\files_for_tests_inner'
+    test_dir_inner = os.path.normcase('files_for_tests/files_for_tests_inner')
     test_dir_inner_name = 'files_for_tests_inner'
     test_file1 = 'test_file1.txt'
     test_file2 = 'test_file2.txt'

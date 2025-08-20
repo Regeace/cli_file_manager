@@ -29,16 +29,16 @@ def copy_file(file_name, show_result=True):
         return
 
     if os.path.isfile(file_name):
-        if '\\' not in file_name:
+        if '\\' not in file_name and '/' not in file_name:
             if os.path.exists('copy_' + file_name):
                 copy2(file_name, 'another_copy_' + file_name)
             else:
                 copy2(file_name, 'copy_' + file_name)
         else:
-            if os.path.exists(f'{os.path.dirname(file_name)}\\copy_{os.path.basename(file_name)}'):
-                copy2(file_name, f'{os.path.dirname(file_name)}\\another_copy_{os.path.basename(file_name)}')
+            if os.path.exists(os.path.join(f'{os.path.dirname(file_name)}', f'copy_{os.path.basename(file_name)}')):
+                copy2(file_name, os.path.join(f'{os.path.dirname(file_name)}', f'another_copy_{os.path.basename(file_name)}'))
             else:
-                copy2(file_name, f'{os.path.dirname(file_name)}\\copy_{os.path.basename(file_name)}')
+                copy2(file_name, os.path.join(f'{os.path.dirname(file_name)}', f'copy_{os.path.basename(file_name)}'))
 
     if show_result:
         print('Создана копия файла')
@@ -108,10 +108,10 @@ def add_date_to_name(entry_name, recursive=False, show_result=True):
         '''date.fromtimestamp() преобразует время в строку 'YYYY-MM-DD'
            os.path.getctime() возвращает время создания файла для Windows'''
         name = os.path.basename(entry_name)
-        if '\\' not in entry_name:
+        if '\\' not in entry_name and '/' not in entry_name:
             name_with_date = f'{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}'
         else:
-            name_with_date = f'{os.path.dirname(entry_name)}\\{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}'
+            name_with_date = os.path.join(f'{os.path.dirname(entry_name)}', f'{name[:name.rfind('.')]}_{date.fromtimestamp(os.path.getctime(entry_name))}{name[name.rfind('.'):]}')
         os.rename(entry_name, name_with_date)
     else:
         for entry in os.scandir(entry_name):

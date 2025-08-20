@@ -1,10 +1,11 @@
 import unittest
+import os.path
 from os import chdir
 from sys import executable
 from subprocess import run
 from _utils import make_test_dir_and_files, delete_test_dir_and_files
 
-'''При некорректной работе тестов во время вывода кириллицы из stdout заменить в locale кодировку на cp65001'''
+'''При некорректной работе тестов во время вывода кириллицы из stdout (на Windows) заменить в locale кодировку на cp65001'''
 
 
 class TestCli(unittest.TestCase):
@@ -13,9 +14,11 @@ class TestCli(unittest.TestCase):
 
     def test_cli_valid_expressions(self):
         test_cases = [
-            ('count', r'clifm\files_for_tests', '6'),
-            ('date', r'clifm\files_for_tests', 'К именам файлов в каталоге добавлена дата их создания'),
-            ('copy', r'clifm\files_for_tests\files_for_tests_inner\test_file1.txt', 'Создана копия файла')
+            ('count', os.path.normcase('clifm/files_for_tests'), '6'),
+            (
+            'date', os.path.normcase('clifm/files_for_tests'), 'К именам файлов в каталоге добавлена дата их создания'),
+            ('copy', os.path.normcase('clifm/files_for_tests/files_for_tests_inner/test_file1.txt'),
+             'Создана копия файла')
         ]
 
         for magic_word, name_path, answer in test_cases:
@@ -31,19 +34,20 @@ class TestCli(unittest.TestCase):
     def test_cli_valid_expressions_long(self):
         """"Проверяет работу программы CLI при использовании 4 слов в написании команды"""
         chdir('..')
+        path = os.path.normcase('clifm/files_for_tests/files_for_tests_inner')
         cli_result = run([executable, 'cli_file_manager.py', 'find',
-                          r'clifm\files_for_tests\files_for_tests_inner', '--re', 'test_file3'],
+                          path, '--re', 'test_file3'],
                          capture_output=True, text=True)
         chdir('clifm')
         # print(r"Должно быть: ('clifm\\files_for_tests\\files_for_tests_inner', 'test_file3.txt')",
         #       '\nполучено в тесте:' + cli_result.stdout[:-1])
-        self.assertEqual(r"('clifm\\files_for_tests\\files_for_tests_inner', 'test_file3.txt')", cli_result.stdout[:-1])
+        self.assertEqual(str((f'{path}', 'test_file3.txt')), cli_result.stdout[:-1])
 
     def test_cli_invalid_expressions(self):
         """Проверка некорректного ввода magic_phrase (первого слова)"""
         test_cases = [
-            ('five', r'clifm\files_for_tests'),
-            ('', r'clifm\files_for_tests'),
+            ('five', os.path.normcase('clifm/files_for_tests')),
+            ('', os.path.normcase('clifm/files_for_tests')),
             ('', '')
         ]
 
