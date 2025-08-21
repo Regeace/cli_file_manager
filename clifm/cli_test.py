@@ -10,13 +10,14 @@ from _utils import make_test_dir_and_files, delete_test_dir_and_files
 
 class TestCli(unittest.TestCase):
     def setUp(self):
+        if os.path.exists('clifm'):
+            chdir('clifm')
         make_test_dir_and_files()
 
     def test_cli_valid_expressions(self):
         test_cases = [
             ('count', os.path.normcase('clifm/files_for_tests'), '6'),
-            (
-            'date', os.path.normcase('clifm/files_for_tests'), 'К именам файлов в каталоге добавлена дата их создания'),
+            ('date', os.path.normcase('clifm/files_for_tests'), 'К именам файлов в каталоге добавлена дата их создания'),
             ('copy', os.path.normcase('clifm/files_for_tests/files_for_tests_inner/test_file1.txt'),
              'Создана копия файла')
         ]
