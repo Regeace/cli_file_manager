@@ -50,6 +50,10 @@ def count_files(dir_name, show_result=True):
         print('Невозможно посчитать файлы. Такой каталог не найден')
         return
 
+    if os.path.isfile(dir_name):
+        print('Выбран файл вместо каталога')
+        return
+
     counter = 0
     for base_dir, current_dir, files in os.walk(dir_name):
         counter += len(files)
