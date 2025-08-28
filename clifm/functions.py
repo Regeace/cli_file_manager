@@ -82,7 +82,7 @@ def find_files(directory, re_expr, show_result=True):
     """Возвращает список из пар (папка, файл) согласно подстроке или регулярному выражению re_expr в каталоге и всех подкаталогах, начиная с directory."""
     files = []
     if not os.path.exists(directory):
-        print('Каталог не существует')
+        print('Каталог не выбран или не существует')
         return
 
     for base_dir, current_dir, checking_files in os.walk(directory):

@@ -25,6 +25,16 @@ def main(page: ft.Page):
         path_field.value = e.path
         path_field.update()
 
+    def enable_delete_button():
+        """Включает и выключает кнопку удаления файлов"""
+        if delete_button_checkbox.value:
+            delete_files_button.disabled = False
+            delete_files_button.bgcolor = 'red'
+        else:
+            delete_files_button.disabled = True
+            delete_files_button.bgcolor = ft.Colors.GREY_300
+        delete_files_button.update()
+
     def show_result(madic_word):
         """Вызывает функцию из functions.py и показывает результат."""
         magic_words = {
@@ -36,13 +46,16 @@ def main(page: ft.Page):
             'size': show_size
         }
 
-        entry_path = path_field.value
-
         '''Сохранение stdout в переменную, вызов функции, возврат к стандартному потоку вывода'''
         tmp_stdout = sys.stdout
         result = StringIO()
         sys.stdout = result
-        magic_words[madic_word](entry_path)
+        if madic_word == 'date' and add_date_recursive.value == True:
+            magic_words[madic_word](path_field.value, recursive=True)
+        elif madic_word == 'find':
+            magic_words[madic_word](path_field.value, find_files_textfield.value)
+        else:
+            magic_words[madic_word](path_field.value)
         sys.stdout = tmp_stdout
         result_field.value = result.getvalue()
         StringIO().close()
@@ -61,8 +74,17 @@ def main(page: ft.Page):
     catalog_pick_button = ft.FilledButton('Выбрать каталог',
                                           on_click=lambda _: catalog_pick_dialog.get_directory_path())
 
-    '''Кнопки функционала приложения'''
+    '''Кнопки и другие элементы функционала приложения'''
     count_files_button = ft.FilledButton('Количество файлов', on_click=lambda _: show_result('count'))
+    get_size_button = ft.FilledButton('Размер файлов', on_click=lambda _: show_result('size'))
+    copy_file_button = ft.FilledButton('Копировать файл', on_click=lambda _: show_result('copy'))
+    add_date_recursive = ft.Checkbox(label='Включая вложенные')
+    add_date_button = ft.FilledButton('Добавить дату', on_click=lambda _: show_result('date'))
+    find_files_textfield = ft.TextField(hint_text='Выражение для поиска файлов', value='')
+    find_files_button = ft.FilledButton('Поиск файлов', on_click=lambda _: show_result('find'))
+    delete_button_checkbox = ft.Checkbox(label='Включить кнопку удаления файлов',
+                                         on_change=lambda _: enable_delete_button())
+    delete_files_button = ft.FilledButton('Удалить файлы', on_click=lambda _: show_result('delete'), disabled=True)
 
     page.overlay.append(file_pick_dialog)
     page.overlay.append(catalog_pick_dialog)
@@ -70,7 +92,10 @@ def main(page: ft.Page):
     page.add(
         ft.Row(controls=[ft.Container(
             content=ft.Column(
-                controls=[path_field, file_pick_button, catalog_pick_button, clear_path_button, count_files_button])),
+                controls=[path_field, file_pick_button, catalog_pick_button, clear_path_button, count_files_button,
+                          get_size_button, copy_file_button, find_files_textfield, find_files_button,
+                          add_date_recursive, add_date_button,
+                          delete_button_checkbox, delete_files_button])),
             ft.Container(content=ft.Column(controls=[ft.Text(value='Результат:'), result_field, clear_result_button]))])
     )
 
