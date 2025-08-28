@@ -29,11 +29,16 @@ def main(page: ft.Page):
         """Включает и выключает кнопку удаления файлов"""
         if delete_button_checkbox.value:
             delete_files_button.disabled = False
-            delete_files_button.bgcolor = 'red'
+            delete_files_button.bgcolor = ft.Colors.RED
         else:
             delete_files_button.disabled = True
             delete_files_button.bgcolor = ft.Colors.GREY_300
         delete_files_button.update()
+
+    def show_gui_readme(_=None):
+        with open('gui_readme.txt', 'r', encoding='utf-8') as readme:
+            for line in readme:
+                print(line[:-1])
 
     def show_result(madic_word):
         """Вызывает функцию из functions.py и показывает результат."""
@@ -43,7 +48,8 @@ def main(page: ft.Page):
             'date': add_date_to_name,
             'delete': delete_file_or_catalog,
             'find': find_files,
-            'size': show_size
+            'size': show_size,
+            'show_gui_readme': show_gui_readme
         }
 
         '''Сохранение stdout в переменную, вызов функции, возврат к стандартному потоку вывода'''
@@ -73,6 +79,7 @@ def main(page: ft.Page):
     catalog_pick_dialog = ft.FilePicker(on_result=pick_catalog_result)
     catalog_pick_button = ft.FilledButton('Выбрать каталог',
                                           on_click=lambda _: catalog_pick_dialog.get_directory_path())
+    show_help_button = ft.FilledButton('Инструкция', on_click=lambda _: show_result('show_gui_readme'))
 
     '''Кнопки и другие элементы функционала приложения'''
     count_files_button = ft.FilledButton('Количество файлов', on_click=lambda _: show_result('count'))
@@ -96,7 +103,8 @@ def main(page: ft.Page):
                           get_size_button, copy_file_button, find_files_textfield, find_files_button,
                           add_date_recursive, add_date_button,
                           delete_button_checkbox, delete_files_button])),
-            ft.Container(content=ft.Column(controls=[ft.Text(value='Результат:'), result_field, clear_result_button]))])
+            ft.Container(content=ft.Column(
+                controls=[ft.Text(value='Результат:'), result_field, clear_result_button, show_help_button]))])
     )
 
 
