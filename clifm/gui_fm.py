@@ -96,16 +96,28 @@ def main(page: ft.Page):
     page.overlay.append(file_pick_dialog)
     page.overlay.append(catalog_pick_dialog)
 
-    page.add(
-        ft.Row(controls=[ft.Container(
-            content=ft.Column(
-                controls=[path_field, file_pick_button, catalog_pick_button, clear_path_button, count_files_button,
-                          get_size_button, copy_file_button, find_files_textfield, find_files_button,
-                          add_date_recursive, add_date_button,
-                          delete_button_checkbox, delete_files_button])),
-            ft.Container(content=ft.Column(
-                controls=[ft.Text(value='Результат:'), result_field, clear_result_button, show_help_button]))])
-    )
+    '''Расположение элементов интерфейса
+        Ряд из 2 колонок
+        Левая:               Правая:
+        Поле адреса          Поле результата
+        Кнопки функционала   Кнопка вызова readme
+    '''
+
+    '''Структурные элементы интерфейса'''
+    pick_entry_container = ft.Container(content=ft.Row(controls=[file_pick_button, catalog_pick_button]))
+    path_container = ft.Container(content=ft.Column(
+        controls=[path_field, ft.Column(controls=[pick_entry_container, clear_path_button])]))
+    find_files_container = ft.Container(content=ft.Column(controls=[find_files_textfield, find_files_button]))
+    add_date_container = ft.Container(content=ft.Row(controls=[add_date_recursive, add_date_button]))
+    delete_files_container = ft.Container(content=ft.Column(controls=[delete_button_checkbox, delete_files_button]))
+    left = ft.Container(
+        content=ft.Column(
+            controls=[path_container, count_files_button, get_size_button, copy_file_button, find_files_container,
+                      add_date_container, delete_files_container]))
+    right = ft.Container(content=ft.Column(
+        controls=[ft.Text(value='Результат:'), result_field, clear_result_button, show_help_button]))
+
+    page.add(ft.Row(controls=[left, right]))
 
 
 ft.app(main)
