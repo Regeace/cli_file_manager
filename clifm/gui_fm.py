@@ -97,7 +97,7 @@ def show_result(magic_word):
     sys.stdout = tmp_stdout
     if result_field in result_field_container.controls:
         result_field_container.controls.pop()
-    result_field_container.controls.insert(0, ft.Text(value=result.getvalue()))
+    result_field_container.controls.insert(0, ft.Text(value=result.getvalue(), selectable=True))
     StringIO().close()
 
     result_field_container.update()
@@ -221,7 +221,6 @@ content = ft.Row(controls=[left, right],
 
 def main(page: ft.Page):
     def page_resized(e):
-        print(page.window.height)
         content.height = page.window.height - 85
         page.update()
 
