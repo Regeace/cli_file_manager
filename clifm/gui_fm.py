@@ -1,9 +1,9 @@
-from os.path import isdir
-
 import flet as ft
 import sys
 from io import StringIO
 from functions import *
+from os.path import isdir
+from os import chdir
 
 '''Различные переменные, используемые для отрисовки интерфейса'''
 secondary_color = ft.Colors.LIGHT_BLUE_700
@@ -65,6 +65,8 @@ def enable_delete_button():
 
 
 def show_gui_readme(_=None):
+    if os.path.exists('clifm'):
+        chdir('clifm')
     with open('gui_readme.md', 'r', encoding='utf-8') as readme:
         for line in readme:
             print(line[:-1])
