@@ -85,6 +85,10 @@ def find_files(directory, re_expr, show_result=True):
         print('Каталог не выбран или не существует')
         return
 
+    if os.path.isfile(directory):
+        print('Выбран файл вместо каталога')
+        return
+
     for base_dir, current_dir, checking_files in os.walk(directory):
         for elem in checking_files:
             if base_dir:
@@ -127,7 +131,7 @@ def add_date_to_name(entry_name, recursive=False, show_result=True):
                 add_date_to_name(entry, recursive=True, show_result=False)
 
     if show_result:
-        print('К именам файлов в каталоге добавлена дата их создания')
+        print('К именам файлов в каталоге (файлу) добавлена дата их создания')
 
 
 def format_size(num_of_bites):
@@ -146,6 +150,10 @@ def show_size(entry_dir):
     """Показывает размер каталогов, подкаталогов и файлов, размещённых в них."""
     if not os.path.exists(entry_dir):
         print('Невозможно посчитать размер. Каталог или файл не существует')
+        return
+
+    if os.path.isfile(entry_dir):
+        print(f'Выбран файл {entry_dir}\n{format_size(os.path.getsize(entry_dir))}')
         return
 
     dict_of_sizes = {entry_dir: None}
