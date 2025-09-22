@@ -38,4 +38,9 @@
     `python cli_file_manager.py date <file_or_directory_name/file_or_directory_path> --recursive`  
 
 Выводит размер каталогов и файлов, начиная с переданного, в следующей команде:  
-    `python cli_file_manager.py size <file_or_directory_name/file_or_directory_path>`   
+    `python cli_file_manager.py size <file_or_directory_name/file_or_directory_path>`
+
+Для вызова графического интерфейса  программы из каталога `cli_file_manager` воспользуйтесь командой:  
+    `python clifm/gui_fm.py`  
+или запустите файл `gui_fm.py`.  
+Ознакомиться с возможностями графического интерфейса можно в `clifm/gui_readme.md`.  
